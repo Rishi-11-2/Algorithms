@@ -21,7 +21,7 @@
        string s;
        long long n;
        long long primes;
-       vector<long long> hashPrimes = {1000000009, 100000007};
+       vector<long long>modPrimes={972663749,1000000007};
        const long long base = 1001;
        vector<vector<long long>> hashValues;
        vector<vector<long long>> powersOfBase;
