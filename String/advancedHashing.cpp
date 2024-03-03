@@ -1,68 +1,51 @@
-#define MAXLEN 1000010
+const long long mod1=(long long)(1e9+7);
+const long long mod2=(long long)(1e9+1);
+const long long mod3=(long long)(1e15+5);
+const long long p1=uniform_int_distribution<long long>(0,mod1-1)(rng);
+const long long p2=uniform_int_distribution<long long>(0,mod2-1)(rng);
+const long long p3=uniform_int_distribution<long long>(0,mod3-1)(rng);
+struct Hash{
 
- constexpr uint64_t mod = (1ULL << 61) - 1;
-const uint64_t seed = chrono::system_clock::now().time_since_epoch().count();
-const uint64_t base = mt19937_64(seed)() % (mod / 3) + (mod / 3);
- uint64_t base_pow[MAXLEN];
-int64_t modmul(uint64_t a, uint64_t b){
-    uint64_t l1 = (uint32_t)a, h1 = a >> 32, l2 = (uint32_t)b, h2 = b >> 32;
-    uint64_t l = l1 * l2, m = l1 * h2 + l2 * h1, h = h1 * h2;
-    uint64_t ret = (l & mod) + (l >> 61) + (h << 3) + (m >> 29) + (m << 35 >> 3) + 1;
-    ret = (ret & mod) + (ret >> 61);
-    ret = (ret & mod) + (ret >> 61);
-    return ret - 1;
-}
- 
-void init(){
-    base_pow[0] = 1;
-    for (int i = 1; i < MAXLEN; i++){
-        base_pow[i] = modmul(base_pow[i - 1], base);
-    }
-}
- 
- 
-struct PolyHash{
-    /// Remove suff vector and usage if reverse hash is not required for more speed
-    vector<int64_t> pref, suff;
- 
-    PolyHash() {}
- 
-    template <typename T>
-    PolyHash(const vector<T>& ar){
-        if (!base_pow[0]) init();
- 
-        int n = ar.size();
-        pref.resize(n + 3, 0), suff.resize(n + 3, 0);
- 
-        for (int i = 1; i <= n; i++){
-            pref[i] = modmul(pref[i - 1], base) + ar[i - 1] + 997;
-            if (pref[i] >= mod) pref[i] -= mod;
-        }
- 
-        for (int i = n; i >= 1; i--){
-            suff[i] = modmul(suff[i + 1], base) + ar[i - 1] + 997;
-            if (suff[i] >= mod) suff[i] -= mod;
+    long long *pref1;
+    // vector<long long>hash;
+    long long *base_pow1;
+    long long *base_pow2;
+    long long *pref2;
+    string s;
+    long long n;
+    Hash(const string &a)
+    {
+        s=a;
+        n=s.length();
+        pref1=(long long*)(malloc((n+1)*sizeof(long long)));
+        pref2=(long long*)(malloc((n+1)*sizeof(long long)));
+        base_pow1=(long long*)(malloc((n+1)*sizeof(long long)));
+        base_pow2=(long long*)(malloc((n+1)*sizeof(long long)));
+        base_pow1[0]=1;
+        base_pow2[0]=1;
+        pref1[0]=1;
+        pref2[0]=1;
+        for(long long i=1;i<=n;i++)
+        {
+            base_pow1[i]=(p1*base_pow1[i-1])%mod1;
+            base_pow2[i]=(p2*base_pow2[i-1])%mod2;
+            pref1[i]=((pref1[i-1]*p1)%mod1+s[i-1]+997)%mod1;
+            pref2[i]=((pref2[i-1]*p2)%mod2+s[i-1]+997)%mod2;
         }
     }
-    /*https://usaco.guide/gold/string-hashing?lang=cpp*/
-    /*  pref[r+1]=( p^r+1 + a[0]*p^(r) + a[1]*p^(r-1) + a[2]*p^(r-2) + ..+ a[l-1]*p^((r+1)-(l-1+1))+a[l]*p^((r+1)-(l+1))  .. a[r-1]*p + a[r] )
-        pref[l]=( p^l + a[0]*p^(l-1) + a[1]*p^(l-2) + a[2]*p^(l-3) + ...a[l-2]*p +  a[l-1])
 
-        p^(r-l+1)*pref[l] = ( a[0]*p^(r) + a[1]*p^(r-1) +.... + a[l-1]*p^(r-l+1) )
-
-        pref[r+1]-pref[l]=a[l]*p^(r-l)+ a[l+1]*p^(r-l-1)+.... + a[r-1]*p + a[r]
-
-    */
-    PolyHash(const char* str)
-        : PolyHash(vector<char> (str, str + strlen(str))) {}
- 
-    uint64_t get_hash(int l, int r){
-        int64_t h = pref[r + 1] - modmul(base_pow[r - l + 1], pref[l]);
-        return h < 0 ? h + mod : h;
+    long long get_hash(long long l,long long r)
+    {
+        long long h1=pref1[r+1]-(pref1[l]*base_pow1[r-l+1])%mod1;
+        long long h2=pref2[r+1]-(pref2[l]*base_pow2[r-l+1])%mod2;
+        if(h1<0)
+        h1+=mod1;
+        
+        if(h2<0)
+        h2+=mod2;
+        long long h3=(h1*p1)%mod3;
+        h3=(h3+h2)%mod3;
+        return h3;
     }
- 
-    uint64_t rev_hash(int l, int r){
-        int64_t h = suff[l + 1] - modmul(base_pow[r - l + 1], suff[r + 2]);
-        return h < 0 ? h + mod : h;
-    }
+
 };
