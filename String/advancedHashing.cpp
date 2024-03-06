@@ -3,7 +3,7 @@ const long long mod2=(long long)(1e9+1);
 const long long mod3=(long long)(1e15+5);
 const long long p1=uniform_int_distribution<long long>(0,mod1-1)(rng);
 const long long p2=uniform_int_distribution<long long>(0,mod2-1)(rng);
-const long long p3=uniform_int_distribution<long long>(0,mod3-1)(rng);
+const long long p3=999119999;
 struct Hash{
 
     long long *pref1;
@@ -49,3 +49,11 @@ struct Hash{
     }
 
 };
+
+
+
+    /*  pref[r+1]=( p^r+1 + a[0]*p^(r) + a[1]*p^(r-1) + a[2]*p^(r-2) + ..+ a[l-1]*p^((r+1)-(l-1+1))+a[l]*p^((r+1)-(l+1))  .. a[r-1]*p + a[r] )
+        pref[l]=( p^l + a[0]*p^(l-1) + a[1]*p^(l-2) + a[2]*p^(l-3) + ...a[l-2]*p +  a[l-1])
+        p^(r-l+1)*pref[l] = ( a[0]*p^(r) + a[1]*p^(r-1) +.... + a[l-1]*p^(r-l+1) )
+        pref[r+1]-pref[l]=a[l]*p^(r-l)+ a[l+1]*p^(r-l-1)+.... + a[r-1]*p + a[r]
+    */
