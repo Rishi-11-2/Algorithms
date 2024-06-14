@@ -1,5 +1,3 @@
-<@&1180499724197961795> code from today's class on finding C(n, r) in O(1) after precomputation
-```cpp
 
 ll expo(ll a, ll b, ll mod) {
     ll res = 1; 
