@@ -24,7 +24,10 @@ class Manacher{
         int r=1;
         for(int i=0;i<n;i++)
         {
-            p[i]=max(0,min(r-i,p[r+l-i]));
+            if((l+r)-i>=0)
+            {
+                p[i]=max(0,min(r-i,p[r+l-i]));
+            }
 
             while((i+p[i])<n && (i-p[i])>=0 && s[i+p[i]]==s[i-p[i]])
             {
