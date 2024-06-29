@@ -5,6 +5,7 @@ using namespace std;
 using namespace __gnu_pbds;
 using namespace chrono;
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+long long getRandomNumber(long long l, long long r) {return uniform_int_distribution<long long>(l, r)(rng);}
 #define debug(x...) { cout << "(" << #x << ")" << " = ( "; PRINT(x); } 
 template <typename T1> void PRINT(T1 t1) { cout << t1 << " )" << endl; }
 template <typename T1, typename... T2>
@@ -22,8 +23,8 @@ signed main()
         solve();
 }
 struct Point{
-    double x,y;
-    Point(double a,double b):x(a),y(b){}
+    long double x,y;
+    Point(long double a,long double b):x(a),y(b){}
 
     bool operator == (const Point &t)const{
         return t.x==x && y==t.y;
@@ -36,17 +37,22 @@ int orientation( const Point &a, const Point &b,const Point &c)
     Line Segment P : a->b
     Line Segment Q : a->c
     */
-    int px=b.x-a.x; // a1
-    int py=b.y-a.y; // a2
+    long double px=b.x-a.x; // a1
+    long double py=b.y-a.y; // a2
 
-    int qx=c.x-a.x; // b1
-    int qy=c.y-a.y; // b2
+    long double qx=c.x-a.x; // b1
+    long double qy=c.y-a.y; // b2
+    
+    // determinant 
+    // a1 a2
+    // b1 b2
+    // cross product = (a1*b2)-(a2*b1)
+    // cross product is between P and Q
+    long double o= px*qy- py*qx;
 
-    int o= px*qy- py*qx;
-
-    if(o>0)
+    if(o>(0.0))
     return 1; // for clockwise
-    else if(o<0)
+    else if(o<(0.0))
     return -1 ;  // for anticlockwise
     return 0; 
 }
@@ -71,17 +77,24 @@ bool f(const Point &a ,const Point &b,const Point &c,bool include_colinear)
     return true;
     
 }
+bool compare(const Point&a,const Point&b)
+{
+    if(a.x==b.x)
+        return a.y<b.y;
+    return a.x<b.x;
+}
+
 // convex hull using graham's scan
 void solve()
 {
-    int n;
+        int n;
     cin>>n;
 
     vector<Point>points;
 
     for(int i=0;i<n;i++)
     {
-        double x,y;
+        long double x,y;
         cin>>x>>y;
         Point a(x,y);
 
@@ -98,7 +111,10 @@ void solve()
         int o=orientation(origin,a,b);
 
         if(o==0)
-        return ((a.x-origin.x)*(a.x-origin.x)+ (a.y-origin.y)*(a.y-origin.y)) < ((b.x-origin.x)*(b.x-origin.x)+(b.y-origin.y)*(b.y-origin.y));
+        {
+            return ((origin.x-a.x)*(origin.x-a.x) + (origin.y-a.y)*(origin.y-a.y))
+                < ((origin.x-b.x)*(origin.x-b.x) + (origin.y-b.y)*(origin.y-b.y));
+        }
         return o>0;
     });
 
@@ -133,9 +149,15 @@ void solve()
         }
         res.push_back(points[i]);
     }
-
+    vector<pair<long double, long double>>ress;
     for(auto it:res)
     {
-        cout<<it.x<<" "<<it.y<<endl;
+        ress.push_back({it.x,it.y});
+    }
+    sort(all(ress));
+
+    for(auto it:ress)
+    {
+        cout<<it.first<<" "<<it.second<<endl;
     }
 }
