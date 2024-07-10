@@ -1,17 +1,18 @@
-class SegmentTree{
+class LazySegmentTree{
 
     public:
     vector<long long>tree;
     vector<long long>lazy;
     vector<long long>arr;
     long long n;
-    SegmentTree(long long nn,vector<long long>&a)
+    LazySegmentTree(long long nn,vector<long long>&a)
     {
         n=nn;
         tree.resize(4*n);
         lazy.resize(4*n);
         lazy.assign(4*n,0);
         arr=a;
+        build(0,n-1,0);
     }
     
     void push(long long ss,long long se,long long si)
