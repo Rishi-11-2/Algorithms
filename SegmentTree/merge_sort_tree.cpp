@@ -31,7 +31,8 @@ class SegmentTree{
         back_inserter(tree[si]));
         
     }
-
+    // find the number of elements strictly larger than x in the range [l,r]
+    // for the number of elements larger than x in the range [l,r] us lower_bound
     int  query1(int  ss,int  se,int  si,int  l,int  r,int  x)
     {
         if(ss>r || se<l)
@@ -48,7 +49,8 @@ class SegmentTree{
         int  mid=(ss+se)/2;
         return query1(ss,mid,2*si+1,l,r,x)+query1(mid+1,se,2*si+2,l,r,x);
     }
-    int  query2(int  ss,int  se,int  si,int  l,int  r,int  x)
+    int  query2(int  ss,int  se,int  si,int  l,int  r,int  x) // find the number of elements smaller than x in range [l,r] 
+    // for elements strictly smaller than x in the range [l,r] use lower_bound
     {
         if(ss>r || se<l)
         return 0;
