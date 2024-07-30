@@ -50,7 +50,7 @@ class Manacher{
     bool isPalindrome(int l,int r)
     {
         int len=r-l+1;
-        int center=(r+l)/2
+        int center=(r+l)/2;
         int odd=((l%2) == (r%2));
         return (len<=findLongest(center,odd));
     }
