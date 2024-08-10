@@ -1,5 +1,5 @@
 class FenwickTree{
-
+    // 1 based indexing Fenwick Tree
     public:
     vector<int>bit;
     int n;
