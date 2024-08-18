@@ -1,3 +1,3 @@
 # Algorithms
 
-Various Algorithms and their Implementations
+Various Cool  Algorithms and their Implementations
