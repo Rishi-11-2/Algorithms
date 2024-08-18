@@ -1,2 +1,3 @@
 # Algorithms
-Merge Sort Tree Implementation for finding superior points
+
+Various Algorithms and their Implementations
