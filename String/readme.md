@@ -13,3 +13,6 @@
 <br>
 
 > pref[r+1]-( pref[l]*p^(r-l+1) ) = a[l] * p^(r-l) + a[l+1] * p^(r-l-1) +.... + a[r-1] * p + a[r]
+
+
+## Implementation Manacher Algorithm
