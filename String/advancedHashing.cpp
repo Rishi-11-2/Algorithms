@@ -1,13 +1,13 @@
 class Hash{
     private:
-    const long long mod1=(long long)(1e9)+7;
-    const long long mod2=(long long)(1e9)+1;
+    const long long mod1=999999929;
+    const long long mod2=999999937;
     const long long mod3=(long long)(1e15)+5;
     
-    const long long p1=1001;
-    const long long p2=1003;
+    const long long p1=1001 // should be greater than the length of the string;
+    const long long p2=1003 // should be greater than the length of the string;
     
-    const long long p3=99911;
+    const long long p3=99911 // should be greater than the length of the string;
     
     public:
     vector<long long>pref1;
