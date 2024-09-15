@@ -4,10 +4,10 @@ class Hash{
     const long long mod2=999999937;
     const long long mod3=(long long)(1e15)+5;
     
-    const long long p1=1001 // should be greater than the length of the string;
-    const long long p2=1003 // should be greater than the length of the string;
+    const long long p1=1001; // should be greater than the length of the string;
+    const long long p2=1003; // should be greater than the length of the string;
     
-    const long long p3=99911 // should be greater than the length of the string;
+    const long long p3=99911; // should be greater than the length of the string;
     
     public:
     vector<long long>pref1;
@@ -20,7 +20,7 @@ class Hash{
     Hash(const string &a)
     {
         s=a;
-        n=s.length()+10;
+        n=s.length();
         pref1.assign(n+1,0);
         pref2.assign(n+1,0);
         base_pow1.assign(n+1,0);
