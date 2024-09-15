@@ -1,8 +1,9 @@
+//https://brilliant.org/wiki/rsa-encryption/
 class RSA{
     public:
     string s;
-    long long public_key;
-    long long private_key;
+    long long e;
+    long long d;
     long long mod;
     RSA(string &a)
     {
@@ -54,16 +55,16 @@ class RSA{
         long long phi=(p-1)*(q-1);
         long long n=p*q;
         mod=n;
-        public_key=phi-1;
-        private_key=mod_inverse(public_key,phi);
+        e=(1LL<<16)+1;// also chosen as 3 in some cases
+        d=mod_inverse(e,phi);
     }
 
     long long encrypt(long long num)
     {
-        return binpow(num,public_key,mod);
+        return binpow(num,e,mod);
     }
     long long decrypt(long long num)
     {
-        return binpow(num,private_key,mod);
+        return binpow(num,d,mod);
     }
 };
