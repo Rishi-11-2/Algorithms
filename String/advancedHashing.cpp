@@ -4,10 +4,9 @@ class Hash{
     const long long mod2=999999937;
     const long long mod3=(long long)(1e15)+5;
     
-    const long long p1=1001; // should be greater than the length of the string;
-    const long long p2=1003; // should be greater than the length of the string;
-    
-    const long long p3=99911; // should be greater than the length of the string;
+    const long long p1=1001; 
+    const long long p2=1003; 
+    const long long p3=99911; 
     
     public:
     vector<long long>pref1;
@@ -47,20 +46,30 @@ class Hash{
         
     }
     
-    long long getHash(int l,int r)
+    inline long long getHash(int l,int r)
     {
+
+        int len=(r-l+1);
+        const long long M1=mod1;
+        const long long M2=mod2;
+        const long long M3=mod3;
+
         long long h1=pref1[r+1];
         
-        h1-=(pref1[l]*base_pow1[r-l+1])%mod1;
-        h1=(h1%mod1+mod1)%mod1;
+        h1-=(pref1[l]*base_pow1[len])%M1;
+        
+
+        if(h1<0)
+        h1+=M1;
         
         long long h2=pref2[r+1];
         
-        h2-=(pref2[l]*base_pow2[r-l+1])%mod2;
+        h2-=(pref2[l]*base_pow2[len])%M2;
         
-        h2=(h2%mod2+mod2)%mod2;
+        if(h2<0)
+        h2+=M2;
         
-        long long h3=((h1*p3)%mod3+h2)%mod3;
+        long long h3=((h1*p3)+h2)%M3;
         
         return h3;
     }

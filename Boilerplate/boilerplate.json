@@ -24,7 +24,7 @@
 		  "    cin.tie(NULL);",
 		  "    cout.setf(ios::fixed);",
 		  "    cout.precision(10);",
-		  "    int t;",
+		  "    int t=1;",
 		  "    cin >> t;",
 		  "    while (t--)",
 		  "    {",
