@@ -26,7 +26,7 @@ void solve(){
     fact[0] = 1;
     for(int i = 1; i <= n; i++){
         fact[i] = mod_mul(fact[i - 1], i, MOD);
-        ifact[i] = mminvprime(fact[i], MOD);
+        // ifact[i] = mminvprime(fact[i], MOD);
     }
     ifact[n] = mminvprime(fact[n], MOD);
     for(int i = n - 1; i >= 0; i--){
